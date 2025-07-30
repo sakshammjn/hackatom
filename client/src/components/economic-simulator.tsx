@@ -14,6 +14,7 @@ import {
   Legend,
 } from 'chart.js';
 import { useCalculations } from '@/hooks/use-calculations';
+import { REAL_INDUSTRIES_DATA, calculateRealROI, marketTrendData } from '@/lib/real-data';
 import { formatCurrency } from '@/lib/calculations';
 
 ChartJS.register(
@@ -43,6 +44,27 @@ export function EconomicSimulator() {
   };
 
   const handleCalculate = () => {
+    // Use real data for calculations
+    const industryData = REAL_INDUSTRIES_DATA.find(
+      ind => ind.name.toLowerCase() === inputs.industry.toLowerCase()
+    );
+    
+    if (industryData) {
+      const realResults = calculateRealROI(
+        industryData,
+        inputs.budget,
+        inputs.timeframe,
+        inputs.facilitySize
+      );
+      
+      // Update the calculations hook with real data
+      updateInputs({ 
+        ...inputs,
+        realData: realResults,
+        industryInfo: industryData
+      });
+    }
+    
     calculate();
     setHasCalculated(true);
   };
@@ -85,7 +107,13 @@ export function EconomicSimulator() {
       {/* Input Controls */}
       <Card className="glass-effect border-gray-600 bg-transparent">
         <CardHeader>
-          <CardTitle className="text-2xl font-semibold text-white">Simulation Parameters</CardTitle>
+          <CardTitle className="text-2xl font-semibold text-white">
+            Simulation Parameters
+            <div className="text-sm text-blue-400 font-normal mt-1 flex items-center">
+              <i className="fas fa-database mr-2"></i>
+              Powered by real market data from NCBI, IAEA, NASA
+            </div>
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-8">
           {/* Investment Budget Slider */}
@@ -158,7 +186,20 @@ export function EconomicSimulator() {
         {/* Side-by-side Comparison */}
         <Card className="glass-effect border-gray-600 bg-transparent">
           <CardHeader>
-            <CardTitle className="text-2xl font-semibold text-white">Cost Comparison</CardTitle>
+            <CardTitle className="text-2xl font-semibold text-white">
+              Cost Comparison
+              {(() => {
+                const industryData = REAL_INDUSTRIES_DATA.find(
+                  ind => ind.name.toLowerCase() === inputs.industry.toLowerCase()
+                );
+                return industryData && (
+                  <div className="text-sm text-green-400 font-normal mt-1">
+                    {industryData.name} Market: ${industryData.marketSize.toLocaleString()}M 
+                    ({industryData.growthRate}% CAGR)
+                  </div>
+                );
+              })()}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

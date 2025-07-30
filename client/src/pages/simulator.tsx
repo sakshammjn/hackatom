@@ -3,6 +3,7 @@ import { EconomicSimulator } from '@/components/economic-simulator';
 import { useCalculations } from '@/hooks/use-calculations';
 import { AtomicScene } from '@/components/atomic-scene';
 import { InteractiveAtom } from '@/components/interactive-atom';
+import { REAL_INDUSTRIES_DATA } from '@/lib/real-data';
 
 export default function Simulator() {
   const { updateInputs, inputs } = useCalculations();
