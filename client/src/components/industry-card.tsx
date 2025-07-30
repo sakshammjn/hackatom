@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { Industry3DIcon } from '@/components/industry-3d-icon';
 
 interface IndustryCardProps {
   industry: {
@@ -18,11 +19,12 @@ export function IndustryCard({ industry, onClick }: IndustryCardProps) {
       onClick={onClick}
     >
       <div className="text-center">
-        <div className={cn(
-          "w-20 h-20 bg-gradient-to-br rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300",
-          industry.color
-        )}>
-          <i className={`${industry.icon} text-3xl text-white`}></i>
+        <div className="flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+          <Industry3DIcon 
+            industry={industry.name.toLowerCase().includes('space') ? 'space' : industry.name.toLowerCase() as any}
+            size={80}
+            animate={true}
+          />
         </div>
         
         <h3 className="text-2xl font-semibold mb-4">{industry.name}</h3>

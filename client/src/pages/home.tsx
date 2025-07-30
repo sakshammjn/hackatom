@@ -2,6 +2,7 @@ import { useLocation } from 'wouter';
 import { INDUSTRIES } from '@/lib/constants';
 import { IndustryCard } from '@/components/industry-card';
 import { AtomicScene } from '@/components/atomic-scene';
+import { AnimatedLogo } from '@/components/animated-logo';
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -23,12 +24,10 @@ export default function Home() {
       <div className="absolute inset-0 isotope-pattern"></div>
       
       <div className="relative z-10 px-12 py-16">
-        {/* Hero Section */}
+        {/* Hero Section with 3D Animated Logo */}
         <div className="text-center mb-16">
           <div className="flex items-center justify-center mb-8">
-            <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-emerald-500 rounded-2xl flex items-center justify-center animate-spin-slow">
-              <i className="fas fa-atom text-3xl text-white"></i>
-            </div>
+            <AnimatedLogo size={300} interactive={true} />
           </div>
           <h1 className="text-6xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
             Isospire
