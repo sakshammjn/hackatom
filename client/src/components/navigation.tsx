@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from 'wouter';
 import { cn } from '@/lib/utils';
+import { MolecularStructure } from '@/components/molecular-structure';
 
 const NAV_ITEMS = [
   { id: 'home', path: '/', icon: 'fas fa-home', label: 'Home' },
@@ -15,9 +16,12 @@ export function Navigation() {
   
   return (
     <nav className="fixed left-0 top-0 h-full w-20 glass-effect z-50 flex flex-col items-center py-6 space-y-8">
-      {/* Logo */}
-      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center animate-pulse-slow">
-        <i className="fas fa-atom text-white text-xl"></i>
+      {/* Logo with 3D Effect */}
+      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0 opacity-30">
+          <MolecularStructure molecule="tc99m" size={48} autoRotate={true} />
+        </div>
+        <i className="fas fa-atom text-white text-xl relative z-10"></i>
       </div>
       
       {/* Navigation Items */}

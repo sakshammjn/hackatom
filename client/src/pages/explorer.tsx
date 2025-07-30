@@ -3,6 +3,7 @@ import { useLocation } from 'wouter';
 import { INDUSTRIES } from '@/lib/constants';
 import { UseCaseCard } from '@/components/use-case-card';
 import { Card, CardContent } from '@/components/ui/card';
+import { AtomicScene } from '@/components/atomic-scene';
 
 export default function Explorer() {
   const [, setLocation] = useLocation();
@@ -35,6 +36,10 @@ export default function Explorer() {
 
   return (
     <section className="min-h-screen relative">
+      {/* 3D Atomic Background */}
+      <div className="absolute inset-0 opacity-10">
+        <AtomicScene intensity={0.8} particleCount={100} />
+      </div>
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/50 to-gray-900/80"></div>
       
       <div className="relative z-10 px-12 py-16">

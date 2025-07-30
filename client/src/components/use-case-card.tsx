@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { MolecularStructure } from '@/components/molecular-structure';
 
 interface UseCaseCardProps {
   useCase: {
@@ -31,12 +32,30 @@ export function UseCaseCard({ useCase, onClick }: UseCaseCardProps) {
     return 'bg-gray-500/20 text-gray-200';
   };
 
+  const getMoleculeType = (isotope: string): 'tc99m' | 'co60' | 'i131' | 'lu177' | 'pu238' => {
+    if (isotope.includes('99m')) return 'tc99m';
+    if (isotope.includes('177')) return 'lu177';
+    if (isotope.includes('131')) return 'i131';
+    if (isotope.includes('60')) return 'co60';
+    if (isotope.includes('238')) return 'pu238';
+    return 'tc99m';
+  };
+
   return (
     <div 
-      className="glass-effect rounded-2xl p-8 atomic-hover transition-all duration-500 cursor-pointer"
+      className="glass-effect rounded-2xl p-8 atomic-hover transition-all duration-500 cursor-pointer relative overflow-hidden"
       onClick={onClick}
     >
-      <div className="flex items-start justify-between mb-6">
+      {/* 3D Molecular Structure Background */}
+      <div className="absolute top-2 right-2 opacity-30">
+        <MolecularStructure 
+          molecule={getMoleculeType(useCase.isotope)} 
+          size={80} 
+          autoRotate={true}
+        />
+      </div>
+      
+      <div className="flex items-start justify-between mb-6 relative z-10">
         <div className={cn(
           "w-16 h-16 bg-gradient-to-br rounded-xl flex items-center justify-center",
           useCase.color
